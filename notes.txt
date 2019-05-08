@@ -1,0 +1,66 @@
+// Notes 
+  * State items
+    - original card array (no state):
+      [
+        {
+          id: 'test',
+          image: 'url',
+          selected: false,
+        },
+        {
+          id: 'test',
+          image: 'url',
+          selected: false,
+        },
+      ]
+
+    - active game array (updated as you go, gameArr)
+      same as above, will be updated & copied as play goes
+
+      [
+        {
+          id: 'test',
+          image: 'url',
+          selected: true,
+        },
+        {
+          id: 'test',
+          image: 'url',
+          selected: true,
+        },
+      ]
+
+    - isPlayerOneTurn (bool)
+      used to show whose turn it is
+
+    - turn array 
+      turnAr
+      keeps track of player turn state (if two items, play goes to next turn? & array is emptied?)
+
+    - selectable state 
+      areCardsDisabled (if current player's turn and has selected two, wait until timeout to unlock)
+      OR if go back in time to previous state, must disable clicks until go back to most recent history
+
+    - history array (allows to go back in time or continue where left off)
+      [
+        [gameArr],
+        [gameArr],
+      ]
+
+    - winner state 
+      isWinner (bool)
+        Will continually check for a winner (if all cards have selected state, determine winner)
+    
+  * Play 
+    - On card click, the id, cardObj and index are passed back to onCardClick.
+      that single card selected is disabled from another click
+      turnArr is updated with the cardObj (push & later slice)
+      turnArr is checked for when length === 2
+        setTimeout is enabled to simulate processing
+        areCardsDisabled is updated so NO other board cards can be clicked
+        if matching ids, cards get the 'selected' property updated to true 
+        after setTimeout completes, updateGameArr occurs with updated objects (or just a slice) 
+
+      ** must deal with single card disable too because once a card is chosen, can't change
+
+    - selected var is used to flag correctly chosen matching cards (not just clicked)
